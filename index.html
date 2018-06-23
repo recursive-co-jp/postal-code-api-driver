@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>郵便番号APIデモ</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+<style>
+@media (max-width: 767px){
+	.form-control{
+		margin-bottom: 8px;
+	}
+}
+</style>
+</head>
+<body>
+<div class="container">
+	<h1>郵便番号API</h1>
+	<p class="lead">
+		郵便番号から日本語表記住所、英語表記住所を自動セットするAPIをgithub.ioで公開します。<br>
+		APIは同じくgithub.ioで公開されています<a href="https://github.com/madefor/postal-code-api/">postal-code-api</a>のデータを参照しています。
+	</p>
+
+	<h2>利用方法</h2>
+<pre>
+&lt;!-- jQueryとpostal-code-api-driver APIを読み込みます。 --&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://recursive-co-jp.github.io/postal-code-api-driver/api/v1/postalCodeApiDriver.js"&gt;&lt;/script&gt;
+
+&lt;!-- 郵便番号フォーム部品のkeyupイベントに関数を指定します。（※例では２つに分かれた郵便番号入力欄から、住所、市区町村、町域を分けて自動入力する想定の記述です。） --&gt;
+&lt;input type="tel" name="zip1" onKeyUp="postalCodeApiDriver.postalCode2Addr('zip1', 'zip2', 'address1', 'address2', 'address3', 'ja');"&gt;
+&lt;input type="tel" name="zip2" onKeyUp="postalCodeApiDriver.postalCode2Addr('zip1', 'zip2', 'address1', 'address2', 'address3', 'ja');"&gt;
+</pre>
+	<h2>利用デモ</h2>
+	<h3>郵便番号（text３桁、text４桁）から日本語表記住所、英語表記住所を都道府県（text）、市区町村・町域（text）に分けて設定する</h3>
+	<section>
+		<div class="form-group">
+				<label>郵便番号</label>
+				<div class="form-inline">
+					〒
+					<input type="tel" class="form-control" style="width: 100px;" name="demo1_zip1" onKeyUp="postalCodeApiDriver.postalCode2Addr('demo1_zip1', 'demo1_zip2', 'demo1_address1', 'demo1_address2');postalCodeApiDriver.postalCode2Addr('demo1_zip1', 'demo1_zip2', 'demo1_address1_en', 'demo1_address2_en', '', 'en');">
+					－
+					<input type="tel" class="form-control" style="width: 100px;" name="demo1_zip2" onKeyUp="postalCodeApiDriver.postalCode2Addr('demo1_zip1', 'demo1_zip2', 'demo1_address1', 'demo1_address2');postalCodeApiDriver.postalCode2Addr('demo1_zip1', 'demo1_zip2', 'demo1_address1_en', 'demo1_address2_en', '', 'en');">
+				</div>
+		</div>
+		<div class="form-group">
+			<label>住所</label>
+			<div>
+				都道府県
+				<input type="text" class="form-control" style="margin-bottom: 8px;" name="demo1_address1" placeholder="自動で設定されます">
+			</div>
+			<div>
+				市区町村・町域
+				<input type="text" class="form-control" style="margin-bottom: 8px;" name="demo1_address2" placeholder="自動で設定されます">
+			</div>
+		</div>
+		<div class="form-group">
+			<label>住所（英語表記）</label>
+			<div>
+				都道府県
+				<input type="text" class="form-control" style="margin-bottom: 8px;" name="demo1_address1_en" placeholder="自動で設定されます">
+			</div>
+			<div>
+				市区町村・町域
+				<input type="text" class="form-control" style="margin-bottom: 8px;" name="demo1_address2_en" placeholder="自動で設定されます">
+			</div>
+		</div>
+	</section>
+
+	<h3>郵便番号（text３桁、text４桁）から日本語表記住所、英語表記住所を都道府県（select）、市区町村（text）、町域（text）に分けて設定する</h3>
+	<section>
+		<div class="form-group">
+				<label>郵便番号</label>
+				<div class="form-inline">
+					〒
+					<input type="tel" class="form-control" style="width: 100px;" name="demo2_zip1" onKeyUp="postalCodeApiDriver.postalCode2Addr('demo2_zip1', 'demo2_zip2', 'demo2_address1', 'demo2_address2', 'demo2_address3');postalCodeApiDriver.postalCode2Addr('demo2_zip1', 'demo2_zip2', 'demo2_address1_en', 'demo2_address2_en', 'demo2_address3_en', 'en');">
+					－
+					<input type="tel" class="form-control" style="width: 100px;" name="demo2_zip2" onKeyUp="postalCodeApiDriver.postalCode2Addr('demo2_zip1', 'demo2_zip2', 'demo2_address1', 'demo2_address2', 'demo2_address3');postalCodeApiDriver.postalCode2Addr('demo2_zip1', 'demo2_zip2', 'demo2_address1_en', 'demo2_address2_en', 'demo2_address3_en', 'en');">
+				</div>
+		</div>
+		<div class="form-group">
+			<label>住所</label>
+			<div>
+				都道府県
+				<select class="form-control" style="width: 200px; margin-bottom: 8px;" name="demo2_address1">
+					<option value="">自動で選択されます</option>
+					<option value="1">北海道</option>
+					<option value="2">青森県</option>
+					<option value="3">岩手県</option>
+					<option value="4">宮城県</option>
+					<option value="5">秋田県</option>
+					<option value="6">山形県</option>
+					<option value="7">福島県</option>
+					<option value="8">茨城県</option>
+					<option value="9">栃木県</option>
+					<option value="10">群馬県</option>
+					<option value="11">埼玉県</option>
+					<option value="12">千葉県</option>
+					<option value="13">東京都</option>
+					<option value="14">神奈川県</option>
+					<option value="15">新潟県</option>
+					<option value="16">富山県</option>
+					<option value="17">石川県</option>
+					<option value="18">福井県</option>
+					<option value="19">山梨県</option>
+					<option value="20">長野県</option>
+					<option value="21">岐阜県</option>
+					<option value="22">静岡県</option>
+					<option value="23">愛知県</option>
+					<option value="24">三重県</option>
+					<option value="25">滋賀県</option>
+					<option value="26">京都府</option>
+					<option value="27">大阪府</option>
+					<option value="28">兵庫県</option>
+					<option value="29">奈良県</option>
+					<option value="30">和歌山県</option>
+					<option value="31">鳥取県</option>
+					<option value="32">島根県</option>
+					<option value="33">岡山県</option>
+					<option value="34">広島県</option>
+					<option value="35">山口県</option>
+					<option value="36">徳島県</option>
+					<option value="37">香川県</option>
+					<option value="38">愛媛県</option>
+					<option value="39">高知県</option>
+					<option value="40">福岡県</option>
+					<option value="41">佐賀県</option>
+					<option value="42">長崎県</option>
+					<option value="43">熊本県</option>
+					<option value="44">大分県</option>
+					<option value="45">宮崎県</option>
+					<option value="46">鹿児島県</option>
+					<option value="47">沖縄県</option>
+				</select>
+			</div>
+			<div>
+				市区町村
+				<input type="text" class="form-control" style="margin-bottom: 8px;" name="demo2_address2" placeholder="自動で設定されます">
+			</div>
+			<div>
+				町域
+				<input type="text" class="form-control" style="margin-bottom: 8px;" name="demo2_address3" placeholder="自動で設定されます">
+			</div>
+		</div>
+		<div class="form-group">
+			<label>住所（英語表記）</label>
+			<div>
+				都道府県
+				<select class="form-control" style="width: 200px; margin-bottom: 8px;" name="demo2_address1_en">
+					<option value="">自動で選択されます</option>
+					<option value="1">Hokkaido</option>
+					<option value="2">Aomori</option>
+					<option value="3">Iwate</option>
+					<option value="4">Miyagi</option>
+					<option value="5">Akita</option>
+					<option value="6">Yamagata</option>
+					<option value="7">Fukushima</option>
+					<option value="8">Ibaraki</option>
+					<option value="9">Tochigi</option>
+					<option value="10">Gumma</option>
+					<option value="11">Saitama</option>
+					<option value="12">Chiba</option>
+					<option value="13">Tokyo</option>
+					<option value="14">Kanagawa</option>
+					<option value="15">Niigata</option>
+					<option value="16">Toyama</option>
+					<option value="17">Ishikawa</option>
+					<option value="18">Fukui</option>
+					<option value="19">Yamanashi</option>
+					<option value="20">Nagano</option>
+					<option value="21">Gifu</option>
+					<option value="22">Shizuoka</option>
+					<option value="23">Aichi</option>
+					<option value="24">Mie</option>
+					<option value="25">Shiga</option>
+					<option value="26">Kyoto</option>
+					<option value="27">Osaka</option>
+					<option value="28">Hyogo</option>
+					<option value="29">Nara</option>
+					<option value="30">Wakayama</option>
+					<option value="31">Tottori</option>
+					<option value="32">Shimane</option>
+					<option value="33">Okayama</option>
+					<option value="34">Hiroshima</option>
+					<option value="35">Yamaguchi</option>
+					<option value="36">Tokushima</option>
+					<option value="37">Kagawa</option>
+					<option value="38">Ehime</option>
+					<option value="39">Kochi</option>
+					<option value="40">Fukuoka</option>
+					<option value="41">Saga</option>
+					<option value="42">Nagasaki</option>
+					<option value="43">Kumamoto</option>
+					<option value="44">Oita</option>
+					<option value="45">Miyazaki</option>
+					<option value="46">Kagoshima</option>
+					<option value="47">Okinawa</option>
+				</select>
+			</div>
+			<div>
+				市区町村
+				<input type="text" class="form-control" style="margin-bottom: 8px;" name="demo2_address2_en" placeholder="自動で設定されます">
+			</div>
+			<div>
+				町域
+				<input type="text" class="form-control" style="margin-bottom: 8px;" name="demo2_address3_en" placeholder="自動で設定されます">
+			</div>
+		</div>
+	</section>
+
+	<h3>郵便番号（text７桁）から日本語表記住所、英語表記住所を都道府県・市区町村・町域（text）に設定する</h3>
+	<section>
+		<div class="form-group">
+				<label>郵便番号</label>
+				<div class="form-inline">
+					〒
+					<input type="tel" class="form-control" style="width: 100px;" name="demo3_zip1" onKeyUp="postalCodeApiDriver.postalCode2Addr('demo3_zip1', '', 'demo3_address1');postalCodeApiDriver.postalCode2Addr('demo3_zip1', '', 'demo3_address1_en', '', '', 'en');">
+				</div>
+		</div>
+		<div class="form-group">
+			<label>住所</label>
+			<div>
+				都道府県・市区町村・町域
+				<input type="text" class="form-control" style="margin-bottom: 8px;" name="demo3_address1" placeholder="自動で設定されます">
+			</div>
+		</div>
+		<div class="form-group">
+			<label>住所（英語表記）</label>
+			<div>
+				都道府県・市区町村・町域
+				<input type="text" class="form-control" style="margin-bottom: 8px;" name="demo3_address1_en" placeholder="自動で設定されます">
+			</div>
+		</div>
+	</section>
+
+	<div class="text-right" style="height: 50px;">
+		<hr style="margin-bottom: 5px;">
+		<a href="https://github.com/recursive-co-jp/postal-code-api-driver">Postal Code API Driver</a>
+		by
+		<a href="https://github.com/recursive-co-jp/postal-code-api-driver">Recursive Co.,Ltd.</a>
+		<a href="https://www.recursive.co.jp">株式会社リカーシブ公式</a>
+		<a href="https://filesend.recursive.co.jp">でっかいファイル送るやつ</a>
+	</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script><script src="libs/jquery-3.2.1/js/jquery-3.2.1.min.js"></script>
+<script src="https://recursive-co-jp.github.io/postal-code-api-driver/api/v1/postalCodeApiDriver.js"></script>
+</body>
+</html>
