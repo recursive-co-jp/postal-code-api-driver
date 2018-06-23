@@ -16,7 +16,7 @@ postalCodeApiDriver.postalCode2Addr= function(zipCode1Name, zipCode2Name, addres
 
 	if(zipCode1.length === 3 && zipCode2.length === 4){
 		;
-	}else if(zipCode1.length === 7 && zipCode2 === ''){
+	}else if(zipCode1.length === 7 && zipCode2 === '' && zipCode2Name === ''){
 		zipCode2 = zipCode1.substr(3,4);
 		zipCode1 = zipCode1.substr(0,3);
 	}else{
