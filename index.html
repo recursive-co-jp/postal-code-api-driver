@@ -219,21 +219,21 @@
 				<label>郵便番号</label>
 				<div class="form-inline">
 					〒
-					<input type="tel" class="form-control" style="width: 100px;" name="demo3_zip1" onKeyUp="postalCodeApiDriver.postalCode2Addr('demo3_zip1', '', 'demo3_address1');postalCodeApiDriver.postalCode2Addr('demo3_zip1', '', 'demo3_address1_en', '', '', 'en');">
+					<input type="tel" class="form-control" style="width: 100px;" name="demo3_zip1[0]" onKeyUp="postalCodeApiDriver.postalCode2Addr('demo3_zip1[0]', '', 'demo3_address1[0]');postalCodeApiDriver.postalCode2Addr('demo3_zip1[0]', '', 'demo3_address1_en[0]', '', '', 'en');">
 				</div>
 		</div>
 		<div class="form-group">
 			<label>住所</label>
 			<div>
 				都道府県・市区町村・町域
-				<input type="text" class="form-control" style="margin-bottom: 8px;" name="demo3_address1" placeholder="自動で設定されます">
+				<input type="text" class="form-control" style="margin-bottom: 8px;" name="demo3_address1[0]" placeholder="自動で設定されます">
 			</div>
 		</div>
 		<div class="form-group">
 			<label>住所（英語表記）</label>
 			<div>
 				都道府県・市区町村・町域
-				<input type="text" class="form-control" style="margin-bottom: 8px;" name="demo3_address1_en" placeholder="自動で設定されます">
+				<input type="text" class="form-control" style="margin-bottom: 8px;" name="demo3_address1_en[0]" placeholder="自動で設定されます">
 			</div>
 		</div>
 	</section>
@@ -248,7 +248,8 @@
 	</div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script><script src="libs/jquery-3.2.1/js/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/jquery-3.2.1/js/jquery-3.2.1.min.js"></script>
 <script src="https://recursive-co-jp.github.io/postal-code-api-driver/api/v1/postalCodeApiDriver.js"></script>
 </body>
 </html>
